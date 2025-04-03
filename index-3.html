@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Калькулятор пульсовых зон</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 1.5rem;
+      max-width: 100%;
+      margin: 0 auto;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #4CAF50, #388E3C);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+    }
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      font-style: italic;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background-color: white;
+      border-left: 6px solid #4CAF50;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .card h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    .card p {
+      margin: 0.5rem 0 0;
+      font-size: 1rem;
+    }
+    .z1 { border-color: #90caf9; }
+    .z2 { border-color: #81c784; }
+    .z3 { border-color: #fff176; }
+    .z4 { border-color: #ffb74d; }
+    .z5 { border-color: #e57373; }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+      header h1 {
+        font-size: 1.5rem;
+      }
+      header p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Калькулятор пульсовых зон</h1>
+    <p>Игорь Поцелуев — твой тренер по бегу</p>
+  </header>
+
+  <label for="lt">Введи свой ПАНО (уд/мин):</label>
+  <input type="number" id="lt" value="172" />
+  <button onclick="calculateZones()">Рассчитать</button>
+
+  <div class="cards" id="result"></div>
+
+  <script>
+    function calculateZones() {
+      const lt = parseFloat(document.getElementById("lt").value);
+      const result = document.getElementById("result");
+
+      const zones = [
+        ["Z1", 0, lt * 0.85, "Восстановление, очень лёгкий бег", "z1"],
+        ["Z2", lt * 0.85, lt * 0.89, "Аэробная база, длительные пробежки", "z2"],
+        ["Z3", lt * 0.90, lt * 0.94, "Марафонский темп, устойчивая нагрузка", "z3"],
+        ["Z4", lt * 0.95, lt, "Темповая зона, развитие скорости", "z4"],
+        ["Z5", lt, "более", "Интервалы, высокая интенсивность", "z5"]
+      ];
+
+      result.innerHTML = zones.map(([zone, from, to, desc, cls]) => {
+        const range = to === "более"
+          ? `>${Math.round(from)} уд/мин`
+          : `${Math.round(from)}–${Math.round(to)} уд/мин`;
+        return `
+          <div class="card ${cls}">
+            <h2>${zone} — ${range}</h2>
+            <p>${desc}</p>
+          </div>
+        `;
+      }).join("");
+    }
+
+    window.onload = calculateZones;
+  </script>
+</body>
+</html>
