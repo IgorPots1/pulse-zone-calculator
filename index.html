@@ -1,17 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Калькулятор пульсовых зон</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
-      padding: 1.5rem;
-      max-width: 100%;
+      padding: 1rem;
       margin: 0 auto;
+      max-width: 480px;
       background-color: #f9f9f9;
       color: #333;
+      box-sizing: border-box;
     }
     header {
       background: linear-gradient(to right, #4CAF50, #388E3C);
@@ -19,15 +21,15 @@
       padding: 1.5rem;
       border-radius: 1rem;
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
     header h1 {
       margin: 0;
-      font-size: 1.75rem;
+      font-size: 1.5rem;
     }
     header p {
       margin-top: 0.5rem;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-style: italic;
     }
     label {
@@ -72,29 +74,17 @@
     }
     .card h2 {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
     .card p {
       margin: 0.5rem 0 0;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
     .z1 { border-color: #90caf9; }
     .z2 { border-color: #81c784; }
     .z3 { border-color: #fff176; }
     .z4 { border-color: #ffb74d; }
     .z5 { border-color: #e57373; }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 1rem;
-      }
-      header h1 {
-        font-size: 1.5rem;
-      }
-      header p {
-        font-size: 0.9rem;
-      }
-    }
   </style>
 </head>
 <body>
@@ -104,7 +94,7 @@
   </header>
 
   <label for="lt">Введи свой ПАНО (уд/мин):</label>
-  <input type="number" id="lt" value="172" />
+  <input type="number" id="lt" placeholder="например, 172" />
   <button onclick="calculateZones()">Рассчитать</button>
 
   <div class="cards" id="result"></div>
@@ -113,6 +103,11 @@
     function calculateZones() {
       const lt = parseFloat(document.getElementById("lt").value);
       const result = document.getElementById("result");
+
+      if (isNaN(lt) || lt <= 0) {
+        result.innerHTML = `<div class="card z5"><h2>Введите корректное значение ПАНО</h2><p>Пожалуйста, введите число больше 0</p></div>`;
+        return;
+      }
 
       const zones = [
         ["Z1", 0, lt * 0.85, "Восстановление, очень лёгкий бег", "z1"],
