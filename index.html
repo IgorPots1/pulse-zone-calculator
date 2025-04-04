@@ -125,9 +125,14 @@
     <p>Оптимальная частота повторения теста: <strong>раз в 2–3 месяца</strong> для любителей, <strong>раз в 6–8 недель</strong> для тех, кто тренируется регулярно и хочет точной настройки.</p>
   </div>
 
-  <label for="lt">Введи свой ПАНО (уд/мин):</label>
-  <input type="number" id="lt" placeholder="например, 172" />
-  <button onclick="calculateZones()">Рассчитать</button>
+  
+<label for="lt">Введи свой ПАНО (уд/мин):</label>
+<p style="margin-top: 0.25rem; margin-bottom: 1rem; font-size: 0.95rem; color: #555;">
+  <strong>ПАНО</strong> — это порог анаэробного обмена: пульс, который ты можешь держать 30–60 минут в устойчиво высоком темпе.
+</p>
+<input type="number" id="lt" placeholder="например, 172" />
+<button onclick="calculateZones()">Рассчитать</button>
+
 
   <div class="cards" id="result"></div>
 
